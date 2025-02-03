@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -43,4 +44,7 @@ public class FlightEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "arrival_city", nullable = false)
     private City arrivalCity;
+
+    @OneToMany(mappedBy = "flight")
+    List<BookingEntity> bookings;
 }

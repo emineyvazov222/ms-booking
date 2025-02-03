@@ -4,12 +4,15 @@ import com.az.edu.turing.msbooking.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "user")
 public class UserEntity extends BaseEntity {
 
     @Column(name = "first_name", nullable = false)
@@ -28,4 +31,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "status", nullable = false)
     private UserStatus status;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<BookingEntity> bookings;
 }
