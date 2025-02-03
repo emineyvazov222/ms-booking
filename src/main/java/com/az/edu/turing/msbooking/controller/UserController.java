@@ -1,6 +1,5 @@
 package com.az.edu.turing.msbooking.controller;
 
-
 import com.az.edu.turing.msbooking.model.dto.request.CreateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.UserDto;
 import com.az.edu.turing.msbooking.service.UserService;
@@ -28,7 +27,6 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
-
     }
 
 }
