@@ -1,58 +1,62 @@
 databaseChangeLog:
   - changeSet:
-      id: 1738572617312-1
-      author: elshan alasgarov
+      id: 003
+      author: Emin Eyvazov
       changes:
         - createTable:
-            tableName: user
+            tableName: bookings
             columns:
               - column:
                   name: id
-                  type: bigSerial
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
               - column:
-                  name: first_name
-                  type: varchar(255)
+                  name: booking_date
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
-                  name: last_name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: phone
-                  type: varchar(20)
+                  name: seat_number
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
                   name: status
-                  type: varchar(15)
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_status
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_type
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
                   name: created_by
-                  type: bigint
+                  type: BIGINT
                   constraints:
                     nullable: true
               - column:
                   name: modified_by
-                  type: bigint
+                  type: BIGINT
                   constraints:
                     nullable: true
               - column:
                   name: created_at
-                  type: timestamp
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
-                  defaultValueComputed: "NOW()"
               - column:
                   name: modified_at
-                  type: timestamp
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: true
-                  defaultValueComputed: "NOW()"
+

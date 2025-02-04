@@ -1,5 +1,6 @@
 package com.az.edu.turing.msbooking.domain.entity;
 
+import com.az.edu.turing.msbooking.model.enums.Role;
 import com.az.edu.turing.msbooking.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "useres")
 public class UserEntity extends BaseEntity {
 
     @Column(name = "first_name", nullable = false)
@@ -27,5 +29,9 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private UserStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
 
 }

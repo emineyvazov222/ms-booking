@@ -3,6 +3,7 @@ package com.az.edu.turing.msbooking.mapper;
 import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.UserDto;
+import com.az.edu.turing.msbooking.model.enums.Role;
 import com.az.edu.turing.msbooking.model.enums.UserStatus;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ public class UserMapper {
                 .lastName(createUserRequest.getLastName())
                 .phoneNumber(createUserRequest.getPhoneNumber())
                 .status(UserStatus.valueOf(createUserRequest.getStatus()))
+                .role(Role.valueOf(createUserRequest.getRole()))
                 .build();
     }
 
@@ -27,6 +29,7 @@ public class UserMapper {
                 .lastName(userEntity.getLastName())
                 .phoneNumber(userEntity.getPhoneNumber())
                 .status(UserStatus.ACTIVE)
+                .role(String.valueOf(userEntity.getRole()))
                 .build();
     }
 }
