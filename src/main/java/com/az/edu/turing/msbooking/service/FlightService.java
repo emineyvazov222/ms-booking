@@ -1,17 +1,20 @@
 package com.az.edu.turing.msbooking.service;
 
 import com.az.edu.turing.msbooking.model.dto.request.CreateFlightRequest;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface FlightService {
 
+    FlightDto createFlight(CreateFlightRequest createFlightRequest);
+
+    List<FlightDto> getAllFlights();
+
     FlightDto getFlightById(Long flightId);
 
-    FlightDto createFlight(CreateFlightRequest request);
+    FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest);
 
-    Page<FlightDto> getAllFlights(Pageable pageable);
+    void deleteFlight(Long flightId);
 }

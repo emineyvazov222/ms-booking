@@ -1,41 +1,55 @@
 databaseChangeLog:
   - changeSet:
-      id: 001
-      author: elshan alasgarov
+      id: 002
+      author: Emin Eyvazov
       changes:
         - createTable:
-            tableName: user
+            tableName: flights
             columns:
               - column:
                   name: id
                   type: BIGSERIAL
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
-                  name: first_name
-                  type: VARCHAR(255)
+                  name: flight_number
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
-                  name: last_name
-                  type: VARCHAR(255)
+                  name: departure_date_time
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
-                  name: email
-                  type: VARCHAR(255)
+                  name: arrival_date_time
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
-                    unique: true
-              - column:
-                  name: phone_number
-                  type: VARCHAR(20)
-                  constraints:
-                    nullable: false
-                    unique: true
               - column:
                   name: status
-                  type: VARCHAR(15)
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: DECIMAL(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: available_seats
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: departure_city
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arrival_city
+                  type: VARCHAR(100)
                   constraints:
                     nullable: false
               - column:

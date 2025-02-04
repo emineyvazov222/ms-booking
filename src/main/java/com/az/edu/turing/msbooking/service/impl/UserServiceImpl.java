@@ -7,10 +7,14 @@ import com.az.edu.turing.msbooking.exception.AlreadyExistsException;
 import com.az.edu.turing.msbooking.exception.NotFoundException;
 import com.az.edu.turing.msbooking.mapper.UserMapper;
 import com.az.edu.turing.msbooking.model.dto.request.CreateUserRequest;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.UserDto;
 import com.az.edu.turing.msbooking.model.enums.UserStatus;
 import com.az.edu.turing.msbooking.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,6 +33,31 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userMapper.toUserEntity(createUserRequest);
         UserEntity savedEntity = userRepository.save(userEntity);
         return userMapper.toUserDto(savedEntity);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream().map(userMapper::toUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toUserDto).orElseThrow(() -> new NotFoundException("User not found"));
+    }
+
+    @Override
+    public UserDto updateUserById(Long id, UpdateUserRequest updateUserRequest) {
+        checkIfFlightExists(updateUserRequest.getEmail());
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+        userEntity.setFirstName(updateUserRequest.getFirstName());
+        userEntity.setLastName(updateUserRequest.getLastName());
+        userEntity.setEmail(updateUserRequest.getEmail());
+        userEntity.setPhoneNumber(updateUserRequest.getPhoneNumber());
+        userEntity.setStatus(UserStatus.valueOf(updateUserRequest.getStatus()));
+        return userMapper.toUserDto(userRepository.save(userEntity));
+
     }
 
     @Override
