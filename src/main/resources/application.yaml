@@ -2,18 +2,20 @@ spring:
   application:
     name: ms-booking
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/booking_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
         show_sql: true
-
-  datasource:
-    url: jdbc:postgresql://localhost:3333/postgres
-    username: postgres
-    password: emin563
 
   liquibase:
     change-log: classpath:db/changelog-master.yml

@@ -20,7 +20,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest createUserRequest, @RequestHeader("role") String role) {
         if (!"ADMIN".equalsIgnoreCase(role)) {
