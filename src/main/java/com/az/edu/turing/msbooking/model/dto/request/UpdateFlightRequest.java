@@ -2,7 +2,6 @@ package com.az.edu.turing.msbooking.model.dto.request;
 
 import com.az.edu.turing.msbooking.model.enums.City;
 import com.az.edu.turing.msbooking.model.enums.FlightStatus;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

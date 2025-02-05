@@ -2,30 +2,24 @@ package com.az.edu.turing.msbooking.mapper;
 
 import com.az.edu.turing.msbooking.domain.entity.BookingEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateBookingRequest;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateBookingRequest;
 import com.az.edu.turing.msbooking.model.dto.response.BookingDto;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class BookingMapper {
+@Mapper(componentModel = "spring")
+public interface BookingMapper {
 
-    public BookingEntity toBookingEntity(CreateBookingRequest createBookingRequest) {
-        return BookingEntity.builder()
-                .bookingDate(createBookingRequest.getBookingDate())
-                .paymentStatus(createBookingRequest.getPaymentStatus())
-                .roomType(createBookingRequest.getRoomType())
-                .seatNumber(createBookingRequest.getSeatNumber())
-                .bookingStatus(createBookingRequest.getBookingStatus())
-                .build();
-    }
+    BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
-    public BookingDto toBookingDto(BookingEntity bookingEntity) {
-        return BookingDto.builder()
-                .id(bookingEntity.getId())
-                .bookingDate(bookingEntity.getBookingDate())
-                .paymentStatus(bookingEntity.getPaymentStatus())
-                .roomType(bookingEntity.getRoomType())
-                .seatNumber(bookingEntity.getSeatNumber())
-                .bookingStatus(bookingEntity.getBookingStatus())
-                .build();
-    }
+//    @Mapping(target = "id", ignore = true)
+    BookingEntity toBookingEntity(CreateBookingRequest createBookingRequest);
+
+//    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "bookingDate", ignore = true)
+    BookingEntity toBookingEntity(UpdateBookingRequest updateBookingRequest);
+
+    BookingDto toBookingDto(BookingEntity bookingEntity);
+
 }

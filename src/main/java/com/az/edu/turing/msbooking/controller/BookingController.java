@@ -24,16 +24,13 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingDto> create(@Valid @RequestBody CreateBookingRequest createBookingRequest, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok(bookingService.createBooking(createBookingRequest));
+    public ResponseEntity<BookingDto> create(@Valid @RequestBody CreateBookingRequest createBookingRequest, @RequestHeader String role) {
+        return ResponseEntity.ok(bookingService.createBooking(createBookingRequest, role));
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingDto>> getBookings(@RequestHeader("role") String role) {
-        return ResponseEntity.ok(bookingService.getAllBookings());
+    public ResponseEntity<List<BookingDto>> getBookings(@RequestHeader String role) {
+        return ResponseEntity.ok(bookingService.getAllBookings(role));
     }
 
     @GetMapping("/{id}")
@@ -44,20 +41,13 @@ public class BookingController {
     @PutMapping("/{id}")
     public ResponseEntity<BookingDto> update(
             @Min(1) @NotNull @PathVariable Long id,
-            @Valid @RequestBody UpdateBookingRequest updateBookingRequest, @RequestHeader("role") String role) {
-
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok(bookingService.updateBooking(id, updateBookingRequest));
+            @Valid @RequestBody UpdateBookingRequest updateBookingRequest, @RequestHeader String role) {
+        return ResponseEntity.ok(bookingService.updateBooking(id, updateBookingRequest, role));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long id, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        bookingService.deleteBookingById(id);
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long id, @RequestHeader String role) {
+        bookingService.deleteBookingById(id, role);
         return ResponseEntity.noContent().build();
     }
 

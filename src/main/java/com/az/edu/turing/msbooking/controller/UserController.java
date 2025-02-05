@@ -22,11 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest createUserRequest, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(createUserRequest));
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest createUserRequest, @RequestHeader String role) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(createUserRequest, role));
     }
 
     @GetMapping
@@ -40,19 +37,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest updateUserRequest, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest));
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest updateUserRequest, @RequestHeader String role) {
+        return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest, role));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        userService.deleteById(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id, @RequestHeader String role) {
+        userService.deleteById(id, role);
         return ResponseEntity.noContent().build();
     }
 

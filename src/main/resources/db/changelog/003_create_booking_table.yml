@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Emin Eyvazov
       changes:
         - createTable:
-            tableName: bookings
+            tableName: bookingss
             columns:
               - column:
                   name: id

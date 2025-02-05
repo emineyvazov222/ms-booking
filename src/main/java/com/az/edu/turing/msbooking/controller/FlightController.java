@@ -26,11 +26,8 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity<FlightDto> create(@Valid @RequestBody CreateFlightRequest createFlightRequest, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok(flightService.createFlight(createFlightRequest));
+    public ResponseEntity<FlightDto> create(@Valid @RequestBody CreateFlightRequest createFlightRequest, @RequestHeader String role) {
+        return ResponseEntity.ok(flightService.createFlight(createFlightRequest, role));
     }
 
     @GetMapping
@@ -46,21 +43,14 @@ public class FlightController {
     @PutMapping("/{id}")
     public ResponseEntity<FlightDto> update(
             @Min(1) @NotNull @PathVariable Long id,
-            @Valid @RequestBody UpdateFlightRequest updateFlightRequest, @RequestHeader("role") String role) {
-
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok(flightService.updateFlight(id, updateFlightRequest));
+            @Valid @RequestBody UpdateFlightRequest updateFlightRequest, @RequestHeader String role) {
+        return ResponseEntity.ok(flightService.updateFlight(id, updateFlightRequest, role));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long flightId, @RequestHeader("role") String role) {
-        if (!"ADMIN".equalsIgnoreCase(role)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        flightService.deleteFlight(flightId);
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long flightId, @RequestHeader String role) {
+        flightService.deleteFlight(flightId, role);
         return ResponseEntity.noContent().build();
     }
-    
+
 }

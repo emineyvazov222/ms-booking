@@ -2,34 +2,22 @@ package com.az.edu.turing.msbooking.mapper;
 
 import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateUserRequest;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.UserDto;
-import com.az.edu.turing.msbooking.model.enums.Role;
-import com.az.edu.turing.msbooking.model.enums.UserStatus;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class UserMapper {
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-    public UserEntity toUserEntity(CreateUserRequest createUserRequest) {
-        return UserEntity.builder()
-                .email(createUserRequest.getEmail())
-                .firstName(createUserRequest.getFirstName())
-                .lastName(createUserRequest.getLastName())
-                .phoneNumber(createUserRequest.getPhoneNumber())
-                .status(UserStatus.valueOf(createUserRequest.getStatus()))
-                .role(Role.valueOf(createUserRequest.getRole()))
-                .build();
-    }
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-    public UserDto toUserDto(UserEntity userEntity) {
-        return UserDto.builder()
-                .id(userEntity.getId())
-                .email(userEntity.getEmail())
-                .firstName(userEntity.getFirstName())
-                .lastName(userEntity.getLastName())
-                .phoneNumber(userEntity.getPhoneNumber())
-                .status(UserStatus.ACTIVE)
-                .role(String.valueOf(userEntity.getRole()))
-                .build();
-    }
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+
+    @Mapping(target = "email", source = "email")
+    UserEntity toUserEntity(CreateUserRequest request);
+
+    UserEntity toUserEntity(UpdateUserRequest request);
+
+    UserDto toUserDto(UserEntity user);
 }

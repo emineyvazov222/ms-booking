@@ -1,20 +1,79 @@
 package com.az.edu.turing.msbooking.service;
 
+import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
+import com.az.edu.turing.msbooking.domain.repository.FlightRepository;
+import com.az.edu.turing.msbooking.exception.NotFoundException;
+import com.az.edu.turing.msbooking.exception.UnauthorizedException;
+import com.az.edu.turing.msbooking.mapper.FlightMapper;
 import com.az.edu.turing.msbooking.model.dto.request.CreateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
+import com.az.edu.turing.msbooking.model.enums.FlightStatus;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public interface FlightService {
+import static com.az.edu.turing.msbooking.model.enums.Role.ADMIN;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
-    FlightDto createFlight(CreateFlightRequest createFlightRequest);
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class FlightService {
 
-    List<FlightDto> getAllFlights();
+    private final FlightRepository flightRepository;
+    private final FlightMapper flightMapper;
 
-    FlightDto getFlightById(Long flightId);
 
-    FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest);
+    public FlightDto createFlight(CreateFlightRequest createFlightRequest, String role) {
+        checkIfAdmin(role);
+        FlightEntity flightEntity = flightRepository.save(flightMapper.toFlightEntity(createFlightRequest));
+        return flightMapper.toFlightDto(flightEntity);
+    }
 
-    void deleteFlight(Long flightId);
+    public List<FlightDto> getAllFlights() {
+        return flightRepository.findAll().stream()
+                .map(flightMapper::toFlightDto).collect(Collectors.toList());
+    }
+
+    public FlightDto getFlightById(Long flightId) {
+        return flightMapper.toFlightDto(flightRepository.findById(flightId)
+                .orElseThrow(() -> new NotFoundException("No flight found with id: " + id)));
+    }
+
+    public FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest, String role) {
+        checkIfAdmin(role);
+        if (flightRepository.existsById(id)) {
+            FlightEntity flightEntity = flightMapper.toFlightEntity(updateFlightRequest);
+            flightRepository.save(flightEntity);
+        }
+        throw new NotFoundException("No flight found with id: " + id);
+    }
+
+    public void deleteFlight(Long flightId, String role) {
+        checkIfAdmin(role);
+        if (flightRepository.existsById(flightId)) {
+            throw new NotFoundException("No flight found with id: " + flightId);
+        }
+        //soft-delete
+        flightRepository.findById(flightId)
+                .ifPresent(flightEntity -> {
+                    flightEntity.setFlightStatus(FlightStatus.CANCELLED);
+                    flightRepository.save(flightEntity);
+                });
+
+        //hard-delete
+//        flightRepository.deleteById(flightId);
+
+    }
+
+    private void checkIfAdmin(String role) {
+        if (!ADMIN.name().equalsIgnoreCase(role)) {
+            log.error("Unauthorized operation: User is not admin.");
+            throw new UnauthorizedException("This operation can only be performed by administrators.");
+        }
+    }
 }

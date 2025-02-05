@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Elshan Alasgarov
       changes:
         - createTable:
-            tableName: useres
+            tableName: users
             columns:
               - column:
                   name: id

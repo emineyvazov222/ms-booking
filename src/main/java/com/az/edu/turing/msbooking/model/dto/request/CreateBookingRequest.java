@@ -1,8 +1,10 @@
 package com.az.edu.turing.msbooking.model.dto.request;
 
+import com.az.edu.turing.msbooking.domain.entity.BookingEntity;
 import com.az.edu.turing.msbooking.model.enums.BookingStatus;
 import com.az.edu.turing.msbooking.model.enums.PaymentStatus;
 import com.az.edu.turing.msbooking.model.enums.RoomType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -12,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,6 +24,7 @@ public class CreateBookingRequest {
 
     @NotNull(message = "Booking date cannot be null")
     @PastOrPresent(message = "Booking date must be in the past or present")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime bookingDate;
 
     @NotNull(message = "Seat number cannot be null")
