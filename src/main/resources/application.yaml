@@ -3,9 +3,9 @@ spring:
     name: ms-booking
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/booking_db
+    url: jdbc:postgresql://localhost:5432/flight-booking
     username: postgres
-    password: postgres
+    password: password
     driver-class-name: org.postgresql.Driver
 
   jpa:

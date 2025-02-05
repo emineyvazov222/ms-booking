@@ -46,5 +46,4 @@ public class FlightEntity extends BaseEntity {
     @Column(name = "arrival_city", nullable = false)
     private City arrivalCity;
 
-
 }
