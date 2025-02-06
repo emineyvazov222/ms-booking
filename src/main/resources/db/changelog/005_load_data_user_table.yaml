@@ -1,0 +1,161 @@
+databaseChangeLog:
+    - changeSet:
+        id: 005
+        author: elshan alasgarov
+        changes:
+          - insert:
+              tableName: users
+              columns:
+                - column:
+                    name: first_name
+                    value: 'Elshan'
+                - column:
+                    name: last_name
+                    value: 'Alasgarov'
+                - column:
+                    name: email
+                    value: 'elshan@example.com'
+                - column:
+                    name: phone_number
+                    value: '1234567890'
+                - column:
+                    name: status
+                    value: 'ACTIVE'
+                - column:
+                    name: created_by
+                    value: '1'
+                - column:
+                    name: modified_by
+                    value: '1'
+                - column:
+                    name: role
+                    value: 'ADMIN'
+
+    - changeSet:
+        id: 006
+        author: elshan alasgarov
+        changes:
+          - insert:
+              tableName: users
+              columns:
+                - column:
+                    name: first_name
+                    value: 'John'
+                - column:
+                    name: last_name
+                    value: 'Doe'
+                - column:
+                    name: email
+                    value: 'john.doe@example.com'
+                - column:
+                    name: phone_number
+                    value: '2345678901'
+                - column:
+                    name: status
+                    value: 'ACTIVE'
+                - column:
+                    name: created_by
+                    value: '1'
+                - column:
+                    name: modified_by
+                    value: '1'
+                - column:
+                    name: role
+                    value: 'USER'
+
+    - changeSet:
+        id: 007
+        author: elshan alasgarov
+        changes:
+          - insert:
+              tableName: users
+              columns:
+                - column:
+                    name: first_name
+                    value: 'Alice'
+                - column:
+                    name: last_name
+                    value: 'Smith'
+                - column:
+                    name: email
+                    value: 'alice.smith@example.com'
+                - column:
+                    name: phone_number
+                    value: '3456789012'
+                - column:
+                    name: status
+                    value: 'INACTIVE'
+                - column:
+                    name: created_by
+                    value: '2'
+                - column:
+                    name: modified_by
+                    value: '2'
+                - column:
+                    name: role
+                    value: 'ADMIN'
+
+    - changeSet:
+        id: 008
+        author: elshan alasgarov
+        changes:
+          - insert:
+              tableName: users
+              columns:
+                - column:
+                    name: first_name
+                    value: 'Bob'
+                - column:
+                    name: last_name
+                    value: 'Johnson'
+                - column:
+                    name: email
+                    value: 'bob.johnson@example.com'
+                - column:
+                    name: phone_number
+                    value: '4567890123'
+                - column:
+                    name: status
+                    value: 'ACTIVE'
+                - column:
+                    name: created_by
+                    value: '1'
+                - column:
+                    name: modified_by
+                    value: '1'
+                - column:
+                    name: role
+                    value: 'USER'
+
+    - changeSet:
+        id: 009
+        author: elshan alasgarov
+        changes:
+          - insert:
+              tableName: users
+              columns:
+                - column:
+                    name: first_name
+                    value: 'Charlie'
+                - column:
+                    name: last_name
+                    value: 'Brown'
+                - column:
+                    name: email
+                    value: 'charlie.brown@example.com'
+                - column:
+                    name: phone_number
+                    value: '5678901234'
+                - column:
+                    name: status
+                    value: 'ACTIVE'
+                - column:
+                    name: created_by
+                    value: '3'
+                - column:
+                    name: modified_by
+                    value: '3'
+                - column:
+                    name: role
+                    value: 'ADMIN'
+  

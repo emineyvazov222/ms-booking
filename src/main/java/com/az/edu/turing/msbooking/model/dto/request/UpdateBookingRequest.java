@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdateBookingRequest {
 
+    private Long userId;
+    private Long flightId;
     private String seatNumber;
     private BookingStatus bookingStatus;
     private PaymentStatus paymentStatus;

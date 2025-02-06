@@ -4,18 +4,59 @@ import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface FlightMapper {
+@Component
+public class FlightMapper {
 
-    @Mapping(target = "arrivalCity", source = "arrivalCity")
-    FlightEntity toFlightEntity(CreateFlightRequest createFlightRequest);
+    public FlightEntity toFlightEntity(CreateFlightRequest request){
+        return FlightEntity.builder()
+                .flightNumber(request.getFlightNumber())
+                .flightStatus(request.getFlightStatus())
+                .price(request.getPrice())
+                .arrivalCity(request.getArrivalCity())
+                .departureCity(request.getDepartureCity())
+                .availableSeats(request.getAvailableSeats())
+                .departureDateTime(request.getDepartureDateTime())
+                .arrivalDateTime(request.getArrivalDateTime())
+                .build();
+    }
 
-    FlightEntity toFlightEntity(UpdateFlightRequest updateFlightRequest);
+    public FlightDto toFlightDto(FlightEntity entity){
+        return FlightDto.builder()
+                .id(entity.getId())
+                .flightNumber(entity.getFlightNumber())
+                .flightStatus(entity.getFlightStatus())
+                .price(entity.getPrice())
+                .arrivalCity(entity.getArrivalCity())
+                .departureCity(entity.getDepartureCity())
+                .availableSeats(entity.getAvailableSeats())
+                .departureDateTime(entity.getDepartureDateTime())
+                .arrivalDateTime(entity.getArrivalDateTime())
+                .build();
+    }
 
-    FlightDto toFlightDto(FlightEntity flightEntity);
+    public FlightEntity toFlightEntity(UpdateFlightRequest request){
+        return FlightEntity.builder()
+                .flightNumber(request.getFlightNumber())
+                .flightStatus(request.getFlightStatus())
+                .price(request.getPrice())
+                .arrivalCity(request.getArrivalCity())
+                .departureCity(request.getDepartureCity())
+                .availableSeats(request.getAvailableSeats())
+                .departureDateTime(request.getDepartureDateTime())
+                .arrivalDateTime(request.getArrivalDateTime())
+                .build();
+    }
 
+    public FlightEntity toFlightEntity(UpdateFlightRequest request, FlightEntity entity) {
+        entity.setAvailableSeats(request.getAvailableSeats());
+        entity.setDepartureDateTime(request.getDepartureDateTime());
+        entity.setArrivalDateTime(request.getArrivalDateTime());
+        entity.setFlightStatus(request.getFlightStatus());
+        entity.setPrice(request.getPrice());
+        entity.setArrivalCity(request.getArrivalCity());
+        entity.setDepartureCity(request.getDepartureCity());
+        return entity;
+    }
 }
