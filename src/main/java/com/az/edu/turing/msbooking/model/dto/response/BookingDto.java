@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookingDto {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String seatNumber;

@@ -27,10 +27,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
-    implementation 'org.mapstruct:mapstruct:1.6.3'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-    implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+    implementation "org.mapstruct:mapstruct:${mapstruct_version}"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapi_version}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    implementation "jakarta.validation:jakarta.validation-api:${validation_version}"
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'

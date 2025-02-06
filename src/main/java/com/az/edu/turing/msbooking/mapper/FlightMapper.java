@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface FlightMapper {
 
-//    @Mapping(target = "arrivalCity", source = "arrivalCity")
+    @Mapping(target = "arrivalCity", source = "arrivalCity")
     FlightEntity toFlightEntity(CreateFlightRequest createFlightRequest);
 
     FlightEntity toFlightEntity(UpdateFlightRequest updateFlightRequest);

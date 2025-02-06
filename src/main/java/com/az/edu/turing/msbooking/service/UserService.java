@@ -30,7 +30,7 @@ public class UserService {
 
     public UserDto createUser(CreateUserRequest createUserRequest, String role) {
         checkIfAdmin(role);
-        checkUserExsists(createUserRequest.getEmail());
+        checkUserExists(createUserRequest.getEmail());
         return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(createUserRequest)));
     }
 
@@ -70,7 +70,7 @@ public class UserService {
 
     }
 
-    private void checkUserExsists(String email) {
+    private void checkUserExists(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new AlreadyExistsException("User already exists with email: " + email);
         }

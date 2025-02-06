@@ -3,15 +3,15 @@ spring:
     name: ms-booking
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/flight-booking
+    url: jdbc:postgresql://localhost:5432/booking_db
     username: postgres
-    password: password
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true

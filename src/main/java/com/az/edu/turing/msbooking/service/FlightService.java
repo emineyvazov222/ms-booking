@@ -11,8 +11,11 @@ import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
 import com.az.edu.turing.msbooking.model.enums.FlightStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +36,13 @@ public class FlightService {
         FlightEntity flightEntity = flightRepository.save(flightMapper.toFlightEntity(createFlightRequest));
         return flightMapper.toFlightDto(flightEntity);
     }
+
+//    public Page<FlightDto> getAllFlights(Pageable pageable) {
+//        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime next24Hours = now.plusHours(24);
+//        Page<FlightEntity> flights = flightRepository.findByDepartureTimeBetween(now, next24Hours, pageable);
+//        return flights.map(flightMapper::toFlightDto);
+//    }
 
     public List<FlightDto> getAllFlights() {
         return flightRepository.findAll().stream()
