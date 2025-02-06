@@ -40,7 +40,7 @@ public class BookingService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         return bookingMapper.toBookingDto(bookingRepository
-                .save(bookingMapper.toBookingEntity(createBookingRequest,flight,user)));
+                .save(bookingMapper.toBookingEntity(createBookingRequest, flight, user)));
     }
 
     public List<BookingDto> getAllBookings(String role) {
