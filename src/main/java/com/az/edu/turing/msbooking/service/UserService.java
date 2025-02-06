@@ -46,11 +46,11 @@ public class UserService {
 
     public UserDto updateUserById(Long id, UpdateUserRequest updateUserRequest, String role) {
         checkIfAdmin(role);
-        if (!userRepository.existsById(id)) {
-            throw new NotFoundException("User with id " + id + " not found");
-        }
-        return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(updateUserRequest)));
+        UserEntity updateUserEntity = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
+        return userMapper.toUserDto(userRepository.save(userMapper
+                .toUserEntity(updateUserRequest,updateUserEntity)));
     }
 
     public void deleteById(Long id, String role) {

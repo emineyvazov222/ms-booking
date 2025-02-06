@@ -5,31 +5,57 @@ import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
 import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateBookingRequest;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateBookingRequest;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.BookingDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface BookingMapper {
+import java.time.LocalDateTime;
 
-//    @Mapping(target = "flight", source = "flight")
-//    @Mapping(target = "user", source = "user")
-//    @Mapping(target = "bookingDate", source = "request.bookingDate")
-//    @Mapping(target = "seatNumber", source = "request.seatNumber")
-//    @Mapping(target = "bookingStatus", source = "request.bookingStatus")
-//    @Mapping(target = "paymentStatus", source = "request.paymentStatus")
-//    @Mapping(target = "roomType", source = "request.roomType")
-//    @Mapping(target = "id", ignore = true)
-    BookingEntity toBookingEntity(CreateBookingRequest request, FlightEntity flight, UserEntity user);
+@Component
+public class BookingMapper {
 
-    @Mapping(target = "firstName", source = "user.firstName")
-    @Mapping(target = "lastName", source = "user.lastName")
-    @Mapping(target = "flightNumber", source = "flight.flightNumber")
-    @Mapping(target = "departureCity", source = "flight.departureCity")
-    @Mapping(target = "arrivalCity", source = "flight.arrivalCity")
-    BookingDto toBookingDto(BookingEntity bookingEntity);
+    public BookingEntity toBookingEntity(CreateBookingRequest request, FlightEntity flight, UserEntity user) {
 
-//    @Mapping(target = "bookingDate", source = "bookingDate")
-    BookingEntity toBookingEntity(UpdateBookingRequest updateBookingRequest);
+        return BookingEntity.builder()
+                .flight(flight)
+                .user(user)
+                .bookingDate(LocalDateTime.now())
+                .seatNumber(request.getSeatNumber())
+                .bookingStatus(request.getBookingStatus())
+                .paymentStatus(request.getPaymentStatus())
+                .roomType(request.getRoomType())
+                .build();
+    }
 
+    public BookingDto toBookingDto(BookingEntity booking) {
+
+        return BookingDto.builder()
+                .id(booking.getId())
+                .userId(booking.getUser().getId())
+                .flightId(booking.getFlight().getId())
+                .firstName(booking.getUser().getFirstName())
+                .lastName(booking.getUser().getLastName())
+                .email(booking.getUser().getEmail())
+                .phone(booking.getUser().getPhoneNumber())
+                .seatNumber(booking.getSeatNumber())
+                .bookingStatus(booking.getBookingStatus())
+                .paymentStatus(booking.getPaymentStatus())
+                .roomType(booking.getRoomType())
+                .bookingDate(booking.getBookingDate())
+                .departureDateTime(booking.getFlight().getDepartureDateTime())
+                .arrivalDateTime(booking.getFlight().getArrivalDateTime())
+                .flightNumber(booking.getFlight().getFlightNumber())
+                .departureCity(booking.getFlight().getDepartureCity())
+                .arrivalCity(booking.getFlight().getArrivalCity())
+                .build();
+    }
+
+    public BookingEntity toBookingEntity(UpdateBookingRequest request, BookingEntity booking) {
+
+        booking.setSeatNumber(request.getSeatNumber());
+        booking.setBookingStatus(request.getBookingStatus());
+        booking.setPaymentStatus(request.getPaymentStatus());
+        booking.setRoomType(request.getRoomType());
+        return booking;
+    }
 }

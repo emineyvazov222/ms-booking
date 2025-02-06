@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 011
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: bookings
+            columns:
+              - column:
+                  name: booking_date
+                  value: '2025-02-07 14:30:00'
+              - column:
+                  name: seat_number
+                  value: 'A1'
+              - column:
+                  name: status
+                  value: 'CONFIRMED'
+              - column:
+                  name: payment_status
+                  value: 'PAID'
+              - column:
+                  name: room_type
+                  value: 'SINGLE'
+              - column:
+                  name: created_by
+                  value: '1'
+              - column:
+                  name: modified_by
+                  value: '1'
+              - column:
+                  name: user_id
+                  value: '1'
+              - column:
+                  name: flight_id
+                  value: '1'
+
+  - changeSet:
+      id: 012
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: bookings
+            columns:
+              - column:
+                  name: booking_date
+                  value: '2025-02-08 16:00:00'
+              - column:
+                  name: seat_number
+                  value: 'B2'
+              - column:
+                  name: status
+                  value: 'CANCELLED'
+              - column:
+                  name: payment_status
+                  value: 'UNPAID'
+              - column:
+                  name: room_type
+                  value: 'SINGLE'
+              - column:
+                  name: created_by
+                  value: '2'
+              - column:
+                  name: modified_by
+                  value: '2'
+              - column:
+                  name: user_id
+                  value: '2'
+              - column:
+                  name: flight_id
+                  value: '2'
+
+  - changeSet:
+      id: 013
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: bookings
+            columns:
+              - column:
+                  name: booking_date
+                  value: '2025-02-09 09:45:00'
+              - column:
+                  name: seat_number
+                  value: 'C3'
+              - column:
+                  name: status
+                  value: 'CONFIRMED'
+              - column:
+                  name: payment_status
+                  value: 'PAID'
+              - column:
+                  name: room_type
+                  value: 'SINGLE'
+              - column:
+                  name: created_by
+                  value: '3'
+              - column:
+                  name: modified_by
+                  value: '3'
+              - column:
+                  name: user_id
+                  value: '3'
+              - column:
+                  name: flight_id
+                  value: '3'

@@ -11,8 +11,6 @@ import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
 import com.az.edu.turing.msbooking.model.enums.FlightStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,15 +35,9 @@ public class FlightService {
         return flightMapper.toFlightDto(flightEntity);
     }
 
-//    public Page<FlightDto> getAllFlights(Pageable pageable) {
-//        LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime next24Hours = now.plusHours(24);
-//        Page<FlightEntity> flights = flightRepository.findByDepartureTimeBetween(now, next24Hours, pageable);
-//        return flights.map(flightMapper::toFlightDto);
-//    }
-
     public List<FlightDto> getAllFlights() {
-        return flightRepository.findAll().stream()
+        return flightRepository.findByDepartureDateTimeBetween(LocalDateTime.now(),
+                        LocalDateTime.now().plusHours(24)).stream()
                 .map(flightMapper::toFlightDto).collect(Collectors.toList());
     }
 
@@ -56,11 +48,11 @@ public class FlightService {
 
     public FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest, String role) {
         checkIfAdmin(role);
-        if (!flightRepository.existsById(id)) {
-            throw new NotFoundException("No flight found with id: " + id);
-        }
+        FlightEntity updateFlightEntity = flightRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No flight found with id: " + id));
+
         return flightMapper.toFlightDto(flightRepository.save(flightMapper
-                .toFlightEntity(updateFlightRequest)));
+                .toFlightEntity(updateFlightRequest, updateFlightEntity)));
     }
 
     public void deleteFlight(Long flightId, String role) {

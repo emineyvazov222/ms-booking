@@ -4,18 +4,54 @@ import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.UserDto;
-import org.mapstruct.Mapper;
+import com.az.edu.turing.msbooking.model.enums.Role;
+import com.az.edu.turing.msbooking.model.enums.UserStatus;
+import org.springframework.stereotype.Component;
 
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+@Component
+public class UserMapper {
 
-@Mapper(componentModel = "spring")
-public interface UserMapper {
+    public UserEntity toUserEntity(CreateUserRequest request){
+        return UserEntity.builder()
+                .email(request.getEmail())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .phoneNumber(request.getPhoneNumber())
+                .status(UserStatus.valueOf(request.getStatus().toUpperCase()))
+                .role(Role.valueOf(request.getRole().toUpperCase()))
+                .build();
+    }
 
-    @Mapping(target = "email", source = "email")
-    UserEntity toUserEntity(CreateUserRequest request);
+    public UserDto toUserDto(UserEntity userEntity){
+        return UserDto.builder()
+                .id(userEntity.getId())
+                .email(userEntity.getEmail())
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
+                .phoneNumber(userEntity.getPhoneNumber())
+                .status(userEntity.getStatus())
+                .role(String.valueOf(userEntity.getRole()))
+                .build();
+    }
 
-    UserEntity toUserEntity(UpdateUserRequest request);
+    public UserEntity toUserEntity(UpdateUserRequest request){
+        return UserEntity.builder()
+                .email(request.getEmail())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .phoneNumber(request.getPhoneNumber())
+                .status(UserStatus.valueOf(request.getStatus().toUpperCase()))
+                .role(Role.valueOf(request.getRole().toUpperCase()))
+                .build();
+    }
 
-    UserDto toUserDto(UserEntity user);
+    public UserEntity toUserEntity(UpdateUserRequest request, UserEntity entity) {
+        entity.setEmail(request.getEmail());
+        entity.setFirstName(request.getFirstName());
+        entity.setLastName(request.getLastName());
+        entity.setPhoneNumber(request.getPhoneNumber());
+        entity.setStatus(UserStatus.valueOf(request.getStatus().toUpperCase()));
+        entity.setRole(Role.valueOf(request.getRole().toUpperCase()));
+        return entity;
+    }
 }

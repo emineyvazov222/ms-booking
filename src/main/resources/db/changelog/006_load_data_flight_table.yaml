@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: 010
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: flights
+            columns:
+              - column:
+                  name: flight_number
+                  value: 'XY123'
+              - column:
+                  name: departure_date_time
+                  value: '2025-02-10 10:00:00'
+              - column:
+                  name: arrival_date_time
+                  value: '2025-02-10 12:00:00'
+              - column:
+                  name: status
+                  value: 'AVAILABLE'
+              - column:
+                  name: price
+                  value: '199.99'
+              - column:
+                  name: available_seats
+                  value: '150'
+              - column:
+                  name: departure_city
+                  value: 'BAKU'
+              - column:
+                  name: arrival_city
+                  value: 'LONDON'
+              - column:
+                  name: created_by
+                  value: '1'
+              - column:
+                  name: modified_by
+                  value: '1'
+
+  - changeSet:
+      id: 011
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: flights
+            columns:
+              - column:
+                  name: flight_number
+                  value: 'AB456'
+              - column:
+                  name: departure_date_time
+                  value: '2025-02-12 14:00:00'
+              - column:
+                  name: arrival_date_time
+                  value: '2025-02-12 16:30:00'
+              - column:
+                  name: status
+                  value: 'AVAILABLE'
+              - column:
+                  name: price
+                  value: '299.99'
+              - column:
+                  name: available_seats
+                  value: '120'
+              - column:
+                  name: departure_city
+                  value: 'PARIS'
+              - column:
+                  name: arrival_city
+                  value: 'NEW_YORK'
+              - column:
+                  name: created_by
+                  value: '2'
+              - column:
+                  name: modified_by
+                  value: '2'
+
+  - changeSet:
+      id: 012
+      author: Elshan Alasgarov
+      changes:
+        - insert:
+            tableName: flights
+            columns:
+              - column:
+                  name: flight_number
+                  value: 'CD789'
+              - column:
+                  name: departure_date_time
+                  value: '2025-02-15 08:30:00'
+              - column:
+                  name: arrival_date_time
+                  value: '2025-02-15 11:00:00'
+              - column:
+                  name: status
+                  value: 'AVAILABLE'
+              - column:
+                  name: price
+                  value: '149.99'
+              - column:
+                  name: available_seats
+                  value: '200'
+              - column:
+                  name: departure_city
+                  value: 'LONDON'
+              - column:
+                  name: arrival_city
+                  value: 'BAKU'
+              - column:
+                  name: created_by
+                  value: '3'
+              - column:
+                  name: modified_by
+                  value: '3'

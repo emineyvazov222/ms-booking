@@ -18,12 +18,18 @@ import java.time.LocalDateTime;
 public class BookingDto {
 
     private Long id;
+    private Long userId;
+    private Long flightId;
     private String firstName;
     private String lastName;
+    private String email;
+    private String phone;
     private String seatNumber;
     private RoomType roomType;
     private PaymentStatus paymentStatus;
     private BookingStatus bookingStatus;
+    private LocalDateTime departureDateTime;
+    private LocalDateTime arrivalDateTime;
     private LocalDateTime bookingDate;
     private String flightNumber;
     private City departureCity;

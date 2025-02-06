@@ -45,7 +45,6 @@ public interface BookingTestConstant {
             .userId(1L)
             .flightId(1L)
             .seatNumber(TEST_SEAT_NUMBER)
-            .bookingDate(TEST_BOOKING_DATE)
             .roomType(TEST_ROOM_TYPE)
             .paymentStatus(TEST_PAYMENT_STATUS)
             .bookingStatus(TEST_BOOKING_STATUS)

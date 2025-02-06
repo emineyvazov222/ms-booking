@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "flights")
 public class FlightEntity extends BaseEntity {
 
-    @Column(name = "flight_number", nullable = false)
+    @Column(name = "flight_number", nullable = false, unique = true)
     private String flightNumber;
 
     @Column(name = "departure_date_time", nullable = false)
