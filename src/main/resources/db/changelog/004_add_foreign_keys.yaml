@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004
+      author: elshan alasgarov
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_bookings_users
+            onDelete: CASCADE
+            onUpdate: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: flight_id
+            referencedTableName: flights
+            referencedColumnNames: id
+            constraintName: fk_bookings_flights
+            onDelete: CASCADE
+            onUpdate: CASCADE

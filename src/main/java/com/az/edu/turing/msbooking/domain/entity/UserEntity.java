@@ -2,8 +2,12 @@ package com.az.edu.turing.msbooking.domain.entity;
 
 import com.az.edu.turing.msbooking.model.enums.Role;
 import com.az.edu.turing.msbooking.model.enums.UserStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -11,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "useres")
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
 
     @Column(name = "first_name", nullable = false)
@@ -34,4 +38,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookingEntity> bookings;
 }

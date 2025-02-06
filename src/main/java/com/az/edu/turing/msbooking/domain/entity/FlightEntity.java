@@ -2,13 +2,12 @@ package com.az.edu.turing.msbooking.domain.entity;
 
 import com.az.edu.turing.msbooking.model.enums.City;
 import com.az.edu.turing.msbooking.model.enums.FlightStatus;
-import com.az.edu.turing.msbooking.model.enums.Role;
-import com.az.edu.turing.msbooking.model.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -46,4 +45,6 @@ public class FlightEntity extends BaseEntity {
     @Column(name = "arrival_city", nullable = false)
     private City arrivalCity;
 
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookingEntity> bookings;
 }
