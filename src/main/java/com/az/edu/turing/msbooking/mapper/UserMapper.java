@@ -12,9 +12,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
-    @Mapping(target = "email", source = "email")
+//    @Mapping(target = "email", source = "email")
     UserEntity toUserEntity(CreateUserRequest request);
 
     UserEntity toUserEntity(UpdateUserRequest request);

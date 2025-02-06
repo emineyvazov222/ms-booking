@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +23,18 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingDto> create(@Valid @RequestBody CreateBookingRequest createBookingRequest, @RequestHeader String role) {
+    public ResponseEntity<BookingDto> create(@Valid @RequestBody CreateBookingRequest createBookingRequest,
+                                             @RequestHeader String role) {
         return ResponseEntity.ok(bookingService.createBooking(createBookingRequest, role));
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingDto>> getBookings(@RequestHeader String role) {
+    public ResponseEntity<List<BookingDto>> getAll(@RequestHeader String role) {
         return ResponseEntity.ok(bookingService.getAllBookings(role));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookingDto> getFlightById(@NotNull @PathVariable Long id) {
+    public ResponseEntity<BookingDto> getById(@NotNull @PathVariable Long id) {
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
 
@@ -46,7 +46,8 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long id, @RequestHeader String role) {
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long id,
+                                       @RequestHeader String role) {
         bookingService.deleteBookingById(id, role);
         return ResponseEntity.noContent().build();
     }

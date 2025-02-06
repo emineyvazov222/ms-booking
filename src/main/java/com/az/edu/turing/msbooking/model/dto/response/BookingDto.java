@@ -1,6 +1,7 @@
 package com.az.edu.turing.msbooking.model.dto.response;
 
 import com.az.edu.turing.msbooking.model.enums.BookingStatus;
+import com.az.edu.turing.msbooking.model.enums.City;
 import com.az.edu.turing.msbooking.model.enums.PaymentStatus;
 import com.az.edu.turing.msbooking.model.enums.RoomType;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookingDto {
 
-    private Long id;
-    private LocalDateTime bookingDate;
+    private String firstName;
+    private String lastName;
     private String seatNumber;
-    private BookingStatus bookingStatus;
-    private PaymentStatus paymentStatus;
     private RoomType roomType;
+    private PaymentStatus paymentStatus;
+    private BookingStatus bookingStatus;
+    private LocalDateTime bookingDate;
+    private String flightNumber;
+    private City departureCity;
+    private City arrivalCity;
+
 }

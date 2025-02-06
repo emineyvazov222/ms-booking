@@ -22,27 +22,30 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest createUserRequest, @RequestHeader String role) {
+    public ResponseEntity<UserDto> create(@Valid @RequestBody CreateUserRequest createUserRequest,
+                                          @RequestHeader String role) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(createUserRequest, role));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest updateUserRequest, @RequestHeader String role) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id,
+                                          @Valid @RequestBody UpdateUserRequest updateUserRequest,
+                                          @RequestHeader String role) {
         return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest, role));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id, @RequestHeader String role) {
+    public ResponseEntity<Void> delete(@PathVariable Long id, @RequestHeader String role) {
         userService.deleteById(id, role);
         return ResponseEntity.noContent().build();
     }

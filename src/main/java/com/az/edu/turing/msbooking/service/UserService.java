@@ -30,10 +30,8 @@ public class UserService {
 
     public UserDto createUser(CreateUserRequest createUserRequest, String role) {
         checkIfAdmin(role);
-        checkIfFlightExists(createUserRequest.getEmail());
-        UserEntity userEntity = userMapper.toUserEntity(createUserRequest);
-        UserEntity savedEntity = userRepository.save(userEntity);
-        return userMapper.toUserDto(savedEntity);
+        checkUserExsists(createUserRequest.getEmail());
+        return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(createUserRequest)));
     }
 
     public List<UserDto> getAllUsers() {
@@ -48,14 +46,10 @@ public class UserService {
 
     public UserDto updateUserById(Long id, UpdateUserRequest updateUserRequest, String role) {
         checkIfAdmin(role);
-        checkIfFlightExists(updateUserRequest.getEmail());
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
-        userEntity.setFirstName(updateUserRequest.getFirstName());
-        userEntity.setLastName(updateUserRequest.getLastName());
-        userEntity.setEmail(updateUserRequest.getEmail());
-        userEntity.setPhoneNumber(updateUserRequest.getPhoneNumber());
-        userEntity.setStatus(UserStatus.valueOf(updateUserRequest.getStatus()));
-        return userMapper.toUserDto(userRepository.save(userEntity));
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException("User with id " + id + " not found");
+        }
+        return userMapper.toUserDto(userRepository.save(userMapper.toUserEntity(updateUserRequest)));
 
     }
 
@@ -76,7 +70,7 @@ public class UserService {
 
     }
 
-    private void checkIfFlightExists(String email) {
+    private void checkUserExsists(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new AlreadyExistsException("User already exists with email: " + email);
         }

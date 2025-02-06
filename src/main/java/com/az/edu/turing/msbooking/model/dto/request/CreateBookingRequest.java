@@ -22,6 +22,12 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateBookingRequest {
 
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private Long flightId;
+
     @NotNull(message = "Booking date cannot be null")
     @PastOrPresent(message = "Booking date must be in the past or present")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")

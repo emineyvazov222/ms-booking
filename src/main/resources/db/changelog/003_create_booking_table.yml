@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: 003
-      author: Emin Eyvazov
+      author: elshan alasgarov
       changes:
         - createTable:
-            tableName: bookingss
+            tableName: bookings
             columns:
               - column:
                   name: id
@@ -59,4 +59,13 @@ databaseChangeLog:
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: true
-
+              - column:
+                  name: user_id
+                  type: bigserial
+                  constraints:
+                    nullable: false
+              - column:
+                  name: flight_id
+                  type: bigserial
+                  constraints:
+                    nullable: false

@@ -7,7 +7,6 @@ import com.az.edu.turing.msbooking.service.FlightService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +25,18 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity<FlightDto> create(@Valid @RequestBody CreateFlightRequest createFlightRequest, @RequestHeader String role) {
+    public ResponseEntity<FlightDto> create(@Valid @RequestBody CreateFlightRequest createFlightRequest,
+                                            @RequestHeader String role) {
         return ResponseEntity.ok(flightService.createFlight(createFlightRequest, role));
     }
 
     @GetMapping
-    public ResponseEntity<List<FlightDto>> getFlights() {
+    public ResponseEntity<List<FlightDto>> getAll() {
         return ResponseEntity.ok(flightService.getAllFlights());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDto> getFlightById(@NotNull @PathVariable Long id) {
+    public ResponseEntity<FlightDto> getById(@NotNull @PathVariable Long id) {
         return ResponseEntity.ok(flightService.getFlightById(id));
     }
 
@@ -48,7 +48,8 @@ public class FlightController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long flightId, @RequestHeader String role) {
+    public ResponseEntity<Void> delete(@Min(1) @NotNull @PathVariable("id") Long flightId,
+                                       @RequestHeader String role) {
         flightService.deleteFlight(flightId, role);
         return ResponseEntity.noContent().build();
     }

@@ -46,16 +46,16 @@ public class FlightService {
 
     public FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest, String role) {
         checkIfAdmin(role);
-        if (flightRepository.existsById(id)) {
-            FlightEntity flightEntity = flightMapper.toFlightEntity(updateFlightRequest);
-            flightRepository.save(flightEntity);
+        if (!flightRepository.existsById(id)) {
+            throw new NotFoundException("No flight found with id: " + id);
         }
-        throw new NotFoundException("No flight found with id: " + id);
+        return flightMapper.toFlightDto(flightRepository.save(flightMapper
+                .toFlightEntity(updateFlightRequest)));
     }
 
     public void deleteFlight(Long flightId, String role) {
         checkIfAdmin(role);
-        if (flightRepository.existsById(flightId)) {
+        if (!flightRepository.existsById(flightId)) {
             throw new NotFoundException("No flight found with id: " + flightId);
         }
         //soft-delete

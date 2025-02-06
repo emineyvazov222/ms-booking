@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 001
-      author: Elshan Alasgarov
+      author: elshan alasgarov
       changes:
         - createTable:
             tableName: users

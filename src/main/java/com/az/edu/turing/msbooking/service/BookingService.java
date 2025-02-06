@@ -1,7 +1,11 @@
 package com.az.edu.turing.msbooking.service;
 
 import com.az.edu.turing.msbooking.domain.entity.BookingEntity;
+import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
+import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.domain.repository.BookingRepository;
+import com.az.edu.turing.msbooking.domain.repository.FlightRepository;
+import com.az.edu.turing.msbooking.domain.repository.UserRepository;
 import com.az.edu.turing.msbooking.exception.NotFoundException;
 import com.az.edu.turing.msbooking.exception.UnauthorizedException;
 import com.az.edu.turing.msbooking.mapper.BookingMapper;
@@ -24,12 +28,19 @@ import static com.az.edu.turing.msbooking.model.enums.Role.ADMIN;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final FlightRepository flightRepository;
+    private final UserRepository userRepository;
     private final BookingMapper bookingMapper;
 
     public BookingDto createBooking(CreateBookingRequest createBookingRequest, String role) {
         checkIfAdmin(role);
-        BookingEntity bookingEntity = bookingRepository.save(bookingMapper.toBookingEntity(createBookingRequest));
-        return bookingMapper.toBookingDto(bookingEntity);
+        FlightEntity flight = flightRepository.findById(createBookingRequest.getFlightId())
+                .orElseThrow(() -> new NotFoundException("Flight not found"));
+        UserEntity user = userRepository.findById(createBookingRequest.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        return bookingMapper.toBookingDto(bookingRepository
+                .save(bookingMapper.toBookingEntity(createBookingRequest,flight,user)));
     }
 
     public List<BookingDto> getAllBookings(String role) {
@@ -46,14 +57,12 @@ public class BookingService {
 
     public BookingDto updateBooking(Long id, UpdateBookingRequest updateBookingRequest, String role) {
         checkIfAdmin(role);
-        BookingEntity bookingEntity = bookingRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Booking with specified id not found"));
-        bookingEntity.setBookingDate(updateBookingRequest.getBookingDate());
-        bookingEntity.setSeatNumber(updateBookingRequest.getSeatNumber());
-        bookingEntity.setBookingStatus(updateBookingRequest.getBookingStatus());
-        bookingEntity.setPaymentStatus(updateBookingRequest.getPaymentStatus());
-        bookingEntity.setRoomType(updateBookingRequest.getRoomType());
-        return bookingMapper.toBookingDto(bookingRepository.save(bookingEntity));
+        if (!bookingRepository.existsById(id)) {
+            throw new NotFoundException("Booking with id " + id + " not found");
+        }
+
+        return bookingMapper.toBookingDto(bookingRepository.save(bookingMapper
+                .toBookingEntity(updateBookingRequest)));
 
     }
 

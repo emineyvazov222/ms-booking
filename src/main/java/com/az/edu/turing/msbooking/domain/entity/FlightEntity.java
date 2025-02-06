@@ -45,7 +45,6 @@ public class FlightEntity extends BaseEntity {
     @Column(name = "arrival_city", nullable = false)
     private City arrivalCity;
 
-//    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<BookingEntity> bookings;
-
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookingEntity> bookings;
 }
