@@ -50,7 +50,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         return userMapper.toUserDto(userRepository.save(userMapper
-                .toUserEntity(updateUserRequest,updateUserEntity)));
+                .toUserEntity(updateUserRequest, updateUserEntity)));
     }
 
     public void deleteById(Long id, String role) {

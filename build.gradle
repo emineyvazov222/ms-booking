@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
-    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapi_version}"
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: "${openapi_version}"
     implementation "jakarta.validation:jakarta.validation-api:${validation_version}"
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'

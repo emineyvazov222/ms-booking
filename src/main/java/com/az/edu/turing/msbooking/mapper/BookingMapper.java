@@ -5,7 +5,6 @@ import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
 import com.az.edu.turing.msbooking.domain.entity.UserEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateBookingRequest;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateBookingRequest;
-import com.az.edu.turing.msbooking.model.dto.request.UpdateUserRequest;
 import com.az.edu.turing.msbooking.model.dto.response.BookingDto;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 public class BookingMapper {
 
     public BookingEntity toBookingEntity(CreateBookingRequest request, FlightEntity flight, UserEntity user) {
-
         return BookingEntity.builder()
                 .flight(flight)
                 .user(user)
@@ -28,7 +26,6 @@ public class BookingMapper {
     }
 
     public BookingDto toBookingDto(BookingEntity booking) {
-
         return BookingDto.builder()
                 .id(booking.getId())
                 .userId(booking.getUser().getId())
@@ -51,7 +48,6 @@ public class BookingMapper {
     }
 
     public BookingEntity toBookingEntity(UpdateBookingRequest request, BookingEntity booking) {
-
         booking.setSeatNumber(request.getSeatNumber());
         booking.setBookingStatus(request.getBookingStatus());
         booking.setPaymentStatus(request.getPaymentStatus());

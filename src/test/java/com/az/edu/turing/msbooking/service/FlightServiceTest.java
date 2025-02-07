@@ -17,10 +17,13 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import static com.az.edu.turing.msbooking.common.FlightTestConstant.*;
+import static com.az.edu.turing.msbooking.common.UserTestConstant.ROLE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -28,7 +31,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class FlightServiceTest {
 
-    @Spy
+    @Mock
     private FlightMapper flightMapper;
 
     @Mock
@@ -56,7 +59,7 @@ class FlightServiceTest {
 
     @Test
     void getAllFlight_ShouldReturnSuccess() {
-        when(flightRepository.findAll()).thenReturn((FLIGHT_ENTITIES));
+        when(flightRepository.findByDepartureDateTimeBetween(any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn((FLIGHT_ENTITIES));
         when(flightMapper.toFlightDto(any(FlightEntity.class))).thenReturn(FLIGHT_DTO);
 
         List<FlightDto> result = flightService.getAllFlights();
@@ -65,7 +68,7 @@ class FlightServiceTest {
         assertEquals(1, result.size());
         assertEquals("AB123", result.getFirst().getFlightNumber());
 
-        verify(flightRepository).findAll();
+        verify(flightRepository).findByDepartureDateTimeBetween(any(LocalDateTime.class), any(LocalDateTime.class));
         verify(flightMapper, times(1)).toFlightDto(any(FlightEntity.class));
 
     }
@@ -88,28 +91,28 @@ class FlightServiceTest {
 
     @Test
     void updateFlight_ShouldReturnSuccess() {
-        when(flightRepository.existsById(FLIGHT_ID)).thenReturn(true);
+        when(flightRepository.findById(FLIGHT_ID)).thenReturn(Optional.of(FLIGHT_ENTITY));
         when(flightRepository.save(any(FlightEntity.class))).thenReturn(FLIGHT_ENTITY);
         when(flightMapper.toFlightDto(any(FlightEntity.class))).thenReturn(FLIGHT_DTO);
-        when(flightMapper.toFlightEntity(any(UpdateFlightRequest.class))).thenReturn(FLIGHT_ENTITY);
+        when(flightMapper.toFlightEntity(any(UpdateFlightRequest.class),eq(FLIGHT_ENTITY))).thenReturn(FLIGHT_ENTITY);
 
-        FlightDto result = flightService.updateFlight(FLIGHT_ID, UPDATE_FLIGHT_REQUEST, "ADMIN");
+        FlightDto result = flightService.updateFlight(FLIGHT_ID, UPDATE_FLIGHT_REQUEST, ROLE);
 
         assertNotNull(result);
         assertEquals(FLIGHT_ID, result.getId());
         assertEquals("AB123", result.getFlightNumber());
         assertEquals(100, result.getAvailableSeats());
 
-        verify(flightRepository).existsById(FLIGHT_ID);
+        verify(flightRepository).findById(FLIGHT_ID);
         verify(flightRepository).save(any(FlightEntity.class));
         verify(flightMapper).toFlightDto(any(FlightEntity.class));
-        verify(flightMapper).toFlightEntity(any(UpdateFlightRequest.class));
+        verify(flightMapper).toFlightEntity(any(UpdateFlightRequest.class),eq(FLIGHT_ENTITY));
 
     }
 
     @Test
     void updateFlightById_ShouldUserNotFound() {
-        when(flightRepository.existsById(NON_EXISTING_FLIGHT_ID)).thenReturn(false);
+        when(flightRepository.findById(NON_EXISTING_FLIGHT_ID)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class,
                 () -> flightService.updateFlight(NON_EXISTING_FLIGHT_ID, UPDATE_FLIGHT_REQUEST, "ADMIN"));

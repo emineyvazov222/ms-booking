@@ -16,7 +16,9 @@ public interface UserTestConstant {
     String FIRST_NAME = "John";
     String LAST_NAME = "Doe";
     String EMAIL = "john.doe@gmail.com";
-    String PHONE_NUMBER = "0123456789";
+    String PHONE_NUMBER = "+994501234567";
+    String STATUS = UserStatus.ACTIVE.name();
+    String ROLE = Role.ADMIN.name();
 
 
     UserEntity USER_ENTITY = UserEntity.builder()
@@ -39,7 +41,7 @@ public interface UserTestConstant {
             .email(EMAIL)
             .phoneNumber(PHONE_NUMBER)
             .status(UserStatus.ACTIVE)
-            .role("ADMIN")
+            .role(ROLE)
             .build();
 
 
@@ -48,8 +50,8 @@ public interface UserTestConstant {
             .lastName(LAST_NAME)
             .email(EMAIL)
             .phoneNumber(PHONE_NUMBER)
-            .status("ACTIVE")
-            .role("ADMIN")
+            .status(STATUS)
+            .role(ROLE)
             .build();
 
 
@@ -58,8 +60,8 @@ public interface UserTestConstant {
             .lastName(LAST_NAME)
             .email(EMAIL)
             .phoneNumber(PHONE_NUMBER)
-            .status("ACTIVE")
-            .role("ADMIN")
+            .status(STATUS)
+            .role(ROLE)
             .build();
 
 }

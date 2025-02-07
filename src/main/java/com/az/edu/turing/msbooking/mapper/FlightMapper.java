@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlightMapper {
 
-    public FlightEntity toFlightEntity(CreateFlightRequest request){
+    public FlightEntity toFlightEntity(CreateFlightRequest request) {
         return FlightEntity.builder()
                 .flightNumber(request.getFlightNumber())
                 .flightStatus(request.getFlightStatus())
@@ -22,7 +22,7 @@ public class FlightMapper {
                 .build();
     }
 
-    public FlightDto toFlightDto(FlightEntity entity){
+    public FlightDto toFlightDto(FlightEntity entity) {
         return FlightDto.builder()
                 .id(entity.getId())
                 .flightNumber(entity.getFlightNumber())
@@ -36,7 +36,7 @@ public class FlightMapper {
                 .build();
     }
 
-    public FlightEntity toFlightEntity(UpdateFlightRequest request){
+    public FlightEntity toFlightEntity(UpdateFlightRequest request) {
         return FlightEntity.builder()
                 .flightNumber(request.getFlightNumber())
                 .flightStatus(request.getFlightStatus())
