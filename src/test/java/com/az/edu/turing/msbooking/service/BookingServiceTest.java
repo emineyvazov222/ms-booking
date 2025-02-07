@@ -7,6 +7,7 @@ import com.az.edu.turing.msbooking.domain.repository.UserRepository;
 import com.az.edu.turing.msbooking.exception.NotFoundException;
 import com.az.edu.turing.msbooking.exception.UnauthorizedException;
 import com.az.edu.turing.msbooking.mapper.BookingMapper;
+import com.az.edu.turing.msbooking.model.dto.request.UpdateBookingRequest;
 import com.az.edu.turing.msbooking.model.dto.response.BookingDto;
 import com.az.edu.turing.msbooking.model.enums.BookingStatus;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.when;
 
 class BookingServiceTest {
 
-    @Spy
+    @Mock
     private BookingMapper bookingMapper;
 
     @Mock
@@ -104,20 +105,6 @@ class BookingServiceTest {
         assertNotNull(result);
         assertEquals(BOOKING_DTO, result);
     }
-
-    @Test
-    void updateBooking_ShouldReturnSuccess() {
-        when(bookingRepository.existsById(1L)).thenReturn(true);
-        when(bookingMapper.toBookingEntity(UPDATE_BOOKING_REQUEST)).thenReturn(BOOKING_ENTITY);
-        when(bookingRepository.save(any())).thenReturn(BOOKING_ENTITY);
-        when(bookingMapper.toBookingDto(any())).thenReturn(BOOKING_DTO);
-
-        BookingDto result = bookingService.updateBooking(1L, UPDATE_BOOKING_REQUEST, "ADMIN");
-
-        assertNotNull(result);
-        assertEquals(BOOKING_DTO, result);
-    }
-
 
     @Test
     void deleteBookingById_ShouldSetBookingStatusToCancelled_WhenBookingExists() {

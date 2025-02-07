@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserEntity toUserEntity(CreateUserRequest request){
+    public UserEntity toUserEntity(CreateUserRequest request) {
         return UserEntity.builder()
                 .email(request.getEmail())
                 .firstName(request.getFirstName())
@@ -22,7 +22,7 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDto toUserDto(UserEntity userEntity){
+    public UserDto toUserDto(UserEntity userEntity) {
         return UserDto.builder()
                 .id(userEntity.getId())
                 .email(userEntity.getEmail())
@@ -34,7 +34,7 @@ public class UserMapper {
                 .build();
     }
 
-    public UserEntity toUserEntity(UpdateUserRequest request){
+    public UserEntity toUserEntity(UpdateUserRequest request) {
         return UserEntity.builder()
                 .email(request.getEmail())
                 .firstName(request.getFirstName())

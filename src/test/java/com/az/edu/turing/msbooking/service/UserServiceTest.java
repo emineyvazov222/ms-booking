@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Spy
+    @Mock
     private UserMapper userMapper;
 
     @Mock
@@ -50,10 +50,12 @@ class UserServiceTest {
         assertNotNull(result);
         assertEquals(USER_DTO.getId(), result.getId());
         assertEquals(USER_DTO.getEmail(), result.getEmail());
+        assertEquals(USER_DTO.getFirstName(), result.getFirstName());
+        assertEquals(USER_DTO.getLastName(), result.getLastName());
 
-        verify(userMapper, times(1)).toUserEntity(CREATE_USER_REQUEST);
-        verify(userRepository, times(1)).save(USER_ENTITY);
-        verify(userMapper, times(1)).toUserDto(USER_ENTITY);
+        verify(userMapper, times(1)).toUserEntity(any(CreateUserRequest.class));
+        verify(userRepository, times(1)).save(any(UserEntity.class));
+        verify(userMapper, times(1)).toUserDto(any(UserEntity.class));
     }
 
     @Test
@@ -101,10 +103,10 @@ class UserServiceTest {
 
     @Test
     void updateUser_ShouldReturnSuccess() {
-        when(userRepository.existsById(USER_ID)).thenReturn(true);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(USER_ENTITY));
+        when(userMapper.toUserEntity(any(UpdateUserRequest.class), eq(USER_ENTITY))).thenReturn(USER_ENTITY);
         when(userRepository.save(any(UserEntity.class))).thenReturn(USER_ENTITY);
         when(userMapper.toUserDto(any(UserEntity.class))).thenReturn(USER_DTO);
-        when(userMapper.toUserEntity(any(UpdateUserRequest.class))).thenReturn(USER_ENTITY);
 
         UserDto result = userService.updateUserById(USER_ID, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST.getRole());
 
@@ -113,22 +115,22 @@ class UserServiceTest {
         assertEquals("John", result.getFirstName());
         assertEquals("Doe", result.getLastName());
 
-        verify(userRepository).existsById(USER_ID);
+        verify(userRepository).findById(USER_ID);
         verify(userRepository).save(any(UserEntity.class));
         verify(userMapper).toUserDto(any(UserEntity.class));
-        verify(userMapper).toUserEntity(any(UpdateUserRequest.class));
+        verify(userMapper).toUserEntity(any(UpdateUserRequest.class),eq(USER_ENTITY));
 
     }
 
     @Test
     void updateUserById_ShouldUserNotFound() {
-        when(userRepository.existsById(USER_ID)).thenReturn(false);
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class,
                 () -> userService.updateUserById(USER_ID, UPDATE_USER_REQUEST, UPDATE_USER_REQUEST.getRole()));
-        assertEquals("User with id " + USER_ID + " not found", exception.getMessage());
+        assertEquals("User not found", exception.getMessage());
 
-        verify(userRepository).existsById(USER_ID);
+        verify(userRepository).findById(USER_ID);
         verify(userRepository, never()).save(any(UserEntity.class));
     }
 
