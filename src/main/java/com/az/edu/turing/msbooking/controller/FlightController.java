@@ -1,6 +1,8 @@
 package com.az.edu.turing.msbooking.controller;
 
+import com.az.edu.turing.msbooking.domain.entity.FlightEntity;
 import com.az.edu.turing.msbooking.model.dto.request.CreateFlightRequest;
+import com.az.edu.turing.msbooking.model.dto.request.FlightFilter;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
 import com.az.edu.turing.msbooking.service.FlightService;
@@ -40,6 +42,12 @@ public class FlightController {
     @GetMapping("/{id}")
     public ResponseEntity<FlightDto> getById(@NotNull @PathVariable Long id) {
         return ResponseEntity.ok(flightService.getFlightById(id));
+    }
+
+    @PostMapping("/filter")
+    public ResponseEntity<List<FlightEntity>> filterFlights(@Valid @RequestBody FlightFilter filter) {
+        List<FlightEntity> flights = flightService.filterFlights(filter);
+        return ResponseEntity.ok(flights);
     }
 
     @PutMapping("/{id}")

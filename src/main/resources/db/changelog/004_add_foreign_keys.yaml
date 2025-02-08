@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 004
-      author: elshan alasgarov
+      author: Emin Eyvazov
       changes:
         - addForeignKeyConstraint:
             baseTableName: bookings

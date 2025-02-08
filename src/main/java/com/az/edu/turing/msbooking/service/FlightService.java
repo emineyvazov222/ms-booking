@@ -6,11 +6,15 @@ import com.az.edu.turing.msbooking.exception.NotFoundException;
 import com.az.edu.turing.msbooking.exception.UnauthorizedException;
 import com.az.edu.turing.msbooking.mapper.FlightMapper;
 import com.az.edu.turing.msbooking.model.dto.request.CreateFlightRequest;
+import com.az.edu.turing.msbooking.model.dto.request.FlightFilter;
 import com.az.edu.turing.msbooking.model.dto.request.UpdateFlightRequest;
 import com.az.edu.turing.msbooking.model.dto.response.FlightDto;
 import com.az.edu.turing.msbooking.model.enums.FlightStatus;
+import com.az.edu.turing.msbooking.specification.FlightSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,6 +48,11 @@ public class FlightService {
     public FlightDto getFlightById(Long flightId) {
         return flightMapper.toFlightDto(flightRepository.findById(flightId)
                 .orElseThrow(() -> new NotFoundException("No flight found with id: " + id)));
+    }
+
+    public List<FlightEntity> filterFlights(FlightFilter filter) {
+        Specification<FlightEntity> spec = FlightSpecification.filterFlights(filter);
+        return flightRepository.findAll((Sort) spec);
     }
 
     public FlightDto updateFlight(Long id, UpdateFlightRequest updateFlightRequest, String role) {

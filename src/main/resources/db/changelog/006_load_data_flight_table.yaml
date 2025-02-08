@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 010
-      author: Elshan Alasgarov
+      author: Emin Eyvazov
       changes:
         - insert:
             tableName: flights

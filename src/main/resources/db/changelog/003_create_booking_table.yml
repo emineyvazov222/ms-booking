@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 003
-      author: elshan alasgarov
+      author: Emin Eyvazov
       changes:
         - createTable:
             tableName: bookings
