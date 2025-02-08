@@ -22,7 +22,7 @@ Used:
 # Getting Started
 Open terminal and:
 
-  git clone https://github.com/ElshanAlasgarov/ms-booking - clone the project
+  git clone https://github.com/emineyvazov222/ms-booking - clone the project
 
   cd ./ms-booking - cnange directory into the project
 
